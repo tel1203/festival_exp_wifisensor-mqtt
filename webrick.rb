@@ -11,7 +11,7 @@ end
 
 # 動作設定
 opt = { 
-  :DocumentRoot   => '.',
+  :DocumentRoot   => ARGV[0],
   :Port           => "9999",
   :BindAddress    => nil,
   :ServerType     => WEBrick::Daemon
@@ -19,8 +19,9 @@ opt = {
 server = WEBrick::HTTPServer.new(opt)
 
 # CGIを実行可能にする
-cgi_dir = File.dirname(".")
+cgi_dir = ARGV[0]
 server.mount("/", WEBrick::HTTPServlet::FileHandler, cgi_dir)
+p cgi_dir
 
 # サーバの終了シグナルを設定する
 ['INT', 'TERM'].each {|signal| 
